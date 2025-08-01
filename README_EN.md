@@ -19,14 +19,13 @@
 <br>
 <p>🔥 <b>RedNote Link Extraction/Content Collection Tool</b>：Extract account-published, favorites, and liked works links; extract search result works links and user links; collect RedNote works information; extract RedNote works download addresses; download RedNote watermark-free works files!</p>
 <p>🔥 "RedNote", "XiaoHongShu" and "小红书" have the same meaning, and this project is collectively referred to as "RedNote".</p>
-<p>⭐ This project is completely free and open-source, with no paid features. Please do not be deceived!</p>
 <p>⭐ Due to the author's limited energy, I was unable to update the English document in a timely manner, and the content may have become outdated, partial translation is machine translation, the translation result may be incorrect, Suggest referring to Chinese documentation. If you want to contribute to translation, we warmly welcome you.</p>
 <h1>📑 Project Features</h1>
 <ul><b>Program Features</b>
 <li>✅ Collect RedNote works information</li>
 <li>✅ Extract RedNote works download addresses</li>
 <li>✅ Download RedNote watermark-free works files</li>
-<li>✅ Download RedNote livePhoto files (non-watermark-free)</li>
+<li>✅ Download RedNote livePhoto files (watermark)</li>
 <li>✅ Automatically skip already downloaded works files</li>
 <li>✅ works file integrity handling mechanism</li>
 <li>✅ Customizable image works file download format</li>
@@ -66,6 +65,7 @@
 <ul>
 <li><code>https://www.xiaohongshu.com/explore/WorksID?xsec_token=XXX</code></li>
 <li><code>https://www.xiaohongshu.com/discovery/item/WorksID?xsec_token=XXX</code></li>
+<li><code>https://www.xiaohongshu.com/user/profile/AuthorID/WorksID?xsec_token=XXX</code></li>
 <li><code>https://xhslink.com/ShareCode</code></li>
 <br/>
 <p><b>Supports entering multiple works links at once, separated by spaces; the program will automatically extract valid links without additional processing!</b></p>
@@ -80,7 +80,10 @@
 <p>⭐ This project includes GitHub Actions for automatic building executable files. Users can use GitHub Actions to build the latest source code into executable files at any time!</p>
 <p>⭐ For the automatic building executable files tutorial, please refer to the <code>Build of Executable File Guide</code> section of this document. If you need a more detailed step-by-step tutorial with illustrations, please <a href="https://mp.weixin.qq.com/s/TorfoZKkf4-x8IBNLImNuw">check out this article</a>!</p>
 <p><strong>Note: The executable file <code>main</code> for Mac OS may need to be launched from the terminal command line; Due to device limitations, the Mac OS executable file has not been tested and its availability cannot be guaranteed!</strong></p>
-<p>If you use the program in this way, the default download path for files is: <code>.\_internal\Download</code>; the configuration file path is: <code>.\_internal\settings.json</code></p>
+<p>If you use the program in this way, the default download path for files is: <code>.\_internal\Volume\Download</code>; the configuration file path is: <code>.\_internal\Volume\settings.json</code></p>
+<h3>Update Methods</h3>
+<p> <strong>Method 1:</strong> Download and extract the files, then copy the old version of the <code>_internal\Volume</code> folder into the new version's <code>_internal</code> folder.</p>
+<p> <strong>Method 2:</strong> Download and extract the files (do not run the program), then copy all files and directly overwrite the old version.</p>
 <h2>⌨️ Docker Run</h2>
 <ol>
 <li>Get Image</li>
@@ -91,8 +94,9 @@
 </ul>
 <li>Create Container</li>
 <ul>
-<li>TUI Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader</code></li>
-<li>API Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app -it joeanamier/xhs-downloader python main.py server</code></li>
+<li>TUI Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it joeanamier/xhs-downloader</code></li>
+<li>API Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it joeanamier/xhs-downloader python main.py api</code></li>
+<li>MCP Mode: <code>docker run --name ContainerName(optional) -p HostPort:5556 -v xhs_downloader_volume:/app/Volume -it joeanamier/xhs-downloader python main.py mcp</code></li>
 </ul>
 <li>Run Container
 <ul>
@@ -222,8 +226,9 @@ async def example_api():
 <ul>
 <li>Due to the date information carried in the links of RedNote works, using links obtained from previous dates may be subject to risk control. It is recommended to use the latest RedNote works links when downloading RedNote work files</li>
 <li>Windows system requires running programs as an administrator to read Chromium, Chrome, Edge browser cookies</li>
-<li>If the function to save works data to a file is enabled, the works data will be stored by default in the <code>./Download/ExploreData.db</code> file</li>
-<li>The program's download records will be stored in the <code>./ExploreID.db</code> file</li>
+<li>If the function to save works data to a file is enabled, the works data will be stored by default in the <code>./Volume/Download/ExploreData.db</code> file</li>
+<li>The program's download records will be stored in the <code>./Volume/ExploreID.db</code> file</li>
+<li>To prevent high-frequency requests from impacting the platform's servers, this project includes a built-in request delay mechanism</li>
 </ul>
 <h1 id="user-scripts">🕹 User Script</h1>
 <p>If your browser has the <a href="https://www.tampermonkey.net/">Tampermonkey</a> browser extension installed, you can add the <a href="https://raw.githubusercontent.com/JoeanAmier/XHS-Downloader/master/static/XHS-Downloader.js">user script</a>(Right click to copy link) to experience the project features without needing to download or install anything!</p>
@@ -270,7 +275,7 @@ async def example():
     record_data = False  # 是否保存作品数据至文件
     image_format = "WEBP"  # 图文作品文件下载格式，支持：AUTO、PNG、WEBP、JPEG、HEIC
     folder_mode = False  # 是否将每个作品的文件储存至单独的文件夹
-    image_download = True  # 图文作品文件下载开关
+    image_download = True  # 图文、图集作品文件下载开关
     video_download = True  # 视频作品文件下载开关
     live_download = False  # 图文动图文件下载开关
     download_record = True  # 是否记录下载成功的作品 ID
@@ -346,7 +351,7 @@ async def example():
 <td align="center">work_path</td>
 <td align="center">str</td>
 <td align="center">Root path for saving works data/files</td>
-<td align="center">Project root path</td>
+<td align="center">Project root path/Volume</td>
 </tr>
 <tr>
 <td align="center">folder_name</td>
@@ -411,7 +416,7 @@ async def example():
 <tr>
 <td align="center">image_download</td>
 <td align="center">bool</td>
-<td align="center">Switch for downloading image works files</td>
+<td align="center">Switch for downloading image and atlas works files</td>
 <td align="center">true</td>
 </tr>
 <tr>

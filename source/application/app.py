@@ -137,6 +137,7 @@ class XHS:
             author_archive,
             write_mtime,
             _print,
+            self.CLEANER,
         )
         self.mapping_data = mapping_data or {}
         self.map_recorder = MapRecorder(
@@ -634,9 +635,6 @@ class XHS:
                 - data：作品信息数据，不需要返回作品信息数据时固定为 None
                 """),
             version=__VERSION__,
-            host=host,
-            port=port,
-            log_level=log_level,
         )
 
         @mcp.tool(
@@ -757,6 +755,9 @@ class XHS:
 
         await mcp.run_async(
             transport=transport,
+            host=host,
+            port=port,
+            log_level=log_level,
         )
 
     async def deal_detail_mcp(
