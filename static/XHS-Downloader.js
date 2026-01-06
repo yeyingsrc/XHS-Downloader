@@ -2,7 +2,7 @@
 // @name           XHS-Downloader
 // @namespace      xhs_downloader
 // @homepage       https://github.com/JoeanAmier/XHS-Downloader
-// @version        2.2.3
+// @version        2.2.4
 // @tag            小红书
 // @tag            RedNote
 // @description    提取小红书作品/用户链接，下载小红书无水印图文/视频作品文件
@@ -219,10 +219,17 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
     }
 
     const generateVideoUrl = note => {
+        // try {
+        //     return [`https://sns-video-bd.xhscdn.com/${note.video.consumer.originVideoKey}`];
+        // } catch (error) {
+        //     console.error("Error generating video URL:", error);
+        //     return [];
+        // }
         try {
-            return [`https://sns-video-bd.xhscdn.com/${note.video.consumer.originVideoKey}`];
+            const video = note.video.media.stream.h265;
+            return [video[video.length - 1].masterUrl];
         } catch (error) {
-            console.error("Error generating video URL:", error);
+            console.error("Error extract video URL:", error);
             return [];
         }
     };
