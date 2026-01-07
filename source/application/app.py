@@ -199,7 +199,7 @@ class XHS:
         container: dict,
         data: Namespace,
     ):
-        container["下载地址"] = self.video.get_video_link(
+        container["下载地址"] = self.video.deal_video_link(
             data,
         )
         container["动图地址"] = [

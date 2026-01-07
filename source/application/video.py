@@ -12,6 +12,14 @@ class Video:
     )
 
     @classmethod
+    def deal_video_link(
+        cls,
+        data: Namespace,
+        preference="resolution",
+    ):
+        return cls.generate_video_link(data) or cls.get_video_link(data, preference)
+
+    @classmethod
     def generate_video_link(cls, data: Namespace) -> list:
         return (
             [Html.format_url(f"https://sns-video-bd.xhscdn.com/{t}")]

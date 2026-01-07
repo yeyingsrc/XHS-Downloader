@@ -8,11 +8,16 @@ __all__ = ["Converter"]
 
 class Converter:
     INITIAL_STATE = "//script/text()"
-    KEYS_LINK = (
+    PC_KEYS_LINK = (
         "note",
         "noteDetailMap",
         "[-1]",
         "note",
+    )
+    PHONE_KEYS_LINK = (
+        "noteData",
+        "data",
+        "noteData",
     )
 
     def run(self, content: str) -> dict:
@@ -31,7 +36,11 @@ class Converter:
 
     @classmethod
     def _filter_object(cls, data: dict) -> dict:
-        return cls.deep_get(data, cls.KEYS_LINK) or {}
+        return (
+            cls.deep_get(data, cls.PHONE_KEYS_LINK)
+            or cls.deep_get(data, cls.PC_KEYS_LINK)
+            or {}
+        )
 
     @classmethod
     def deep_get(cls, data: dict, keys: list | tuple, default=None):
@@ -58,7 +67,11 @@ class Converter:
     @staticmethod
     def get_script(scripts: list) -> str:
         scripts.reverse()
-        for script in scripts:
-            if script.startswith("window.__INITIAL_STATE__"):
-                return script
-        return ""
+        return next(
+            (
+                script
+                for script in scripts
+                if script.startswith("window.__INITIAL_STATE__")
+            ),
+            "",
+        )
