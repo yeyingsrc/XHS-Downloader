@@ -158,7 +158,7 @@ class Manager:
             "avif",
         }:
             return i
-        return "png"
+        return "jpeg"
 
     @staticmethod
     def is_exists(path: Path) -> bool:

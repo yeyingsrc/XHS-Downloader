@@ -268,12 +268,12 @@ async def example_api():
 <h2>📜 脚本说明</h2>
 <ul>
 <li>下载小红书无水印作品文件时，脚本需要花费时间处理文件，请等待片刻，请勿多次点击下载按钮</li>
-<li>无水印图片文件为 PNG 格式；无水印视频文件较大，可能需要较长的时间处理，页面跳转可能会导致下载失败</li>
 <li>提取账号发布、收藏、点赞、专辑作品链接时，脚本可以自动滚动页面直至加载全部作品</li>
 <li>提取推荐作品链接、搜索作品、用户链接时，脚本可以自动滚动指定次数加载更多内容，默认滚动次数：50 次</li>
 <li>自动滚动页面功能默认关闭；用户可以自由开启，并修改滚动页面次数，修改后立即生效</li>
 <li>如果未开启自动滚动页面功能，用户需要手动滚动页面以便加载更多内容后再进行其他操作</li>
 <li>支持作品文件打包下载；该功能默认开启，多个文件的作品将会以压缩包格式下载</li>
+<li>向服务器推送下载任务时，文件格式、名称规则等设置以服务器配置文件中的设置为准</li>
 <li>使用全局代理工具可能会导致脚本下载文件失败，如有异常，请尝试关闭代理工具，必要时向作者反馈</li>
 <li>XHS-Downloader 用户脚本仅实现可见即可得的数据采集功能，无任何收费功能和破解功能</li>
 </ul>
@@ -434,7 +434,7 @@ async def example():
 <td align="center">image_format</td>
 <td align="center">str</td>
 <td align="center">图文作品文件下载格式，支持：<code>AUTO</code>、<code>PNG</code>、<code>WEBP</code>、<code>JPEG</code>、<code>HEIC</code><br><strong>部分作品没有 <code>HEIC</code> 格式的文件，此时下载的文件可能为 <code>WEBP</code> 格式！</strong><br><strong>设置为 <code>AUTO</code> 时表示动态格式，实际格式取决于服务器响应数据！</strong></td>
-<td align="center">PNG</td>
+<td align="center">JPEG</td>
 </tr>
 <tr>
 <td align="center">image_download</td>

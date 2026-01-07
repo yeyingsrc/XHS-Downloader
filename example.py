@@ -97,12 +97,6 @@ async def test():
         return
     async with XHS(
         download_record=False,
-        # image_format="PNG",
-        # image_format="WEBP",
-        # image_format="JPEG",
-        # image_format="HEIC",
-        # image_format="AVIF",
-        # image_format="AUTO",
     ) as xhs:
         print(
             await xhs.extract(

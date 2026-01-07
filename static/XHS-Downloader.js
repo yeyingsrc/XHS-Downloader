@@ -2,7 +2,7 @@
 // @name           XHS-Downloader
 // @namespace      xhs_downloader
 // @homepage       https://github.com/JoeanAmier/XHS-Downloader
-// @version        2.2.4
+// @version        2.2.5
 // @tag            小红书
 // @tag            RedNote
 // @description    提取小红书作品/用户链接，下载小红书无水印图文/视频作品文件
@@ -41,7 +41,8 @@
         maxScrollCount: GM_getValue("maxScrollCount", 50),
         keepMenuVisible: GM_getValue("keepMenuVisible", false),
         linkCheckboxSwitch: GM_getValue("linkCheckboxSwitch", true),
-        imageCheckboxSwitch: GM_getValue("imageCheckboxSwitch", true), // imageDownloadFormat: GM_getValue("imageDownloadFormat", "JPG"),
+        imageCheckboxSwitch: GM_getValue("imageCheckboxSwitch", true),
+        imageDownloadFormat: GM_getValue("imageDownloadFormat", "JPEG"),
         scriptServerURL: GM_getValue("scriptServerURL", defaultsWebSocketURL),
         scriptServerSwitch: GM_getValue("scriptServerSwitch", false),
         fileNameFormat: undefined,
@@ -75,12 +76,14 @@
 
 注意事项：
 1. 下载小红书无水印作品文件时，脚本需要花费时间处理文件，请等待片刻，请勿多次点击下载按钮
-2. 无水印作品文件较大，可能需要较长的时间处理，页面跳转可能会导致下载失败
-3. 提取账号发布、收藏、点赞、专辑作品链接时，脚本可以自动滚动页面直至加载全部作品
-4. 提取推荐作品链接、搜索作品、用户链接时，脚本可以自动滚动指定次数加载更多内容，默认滚动次数：50 次
-5. 自动滚动页面功能默认关闭；用户可以自由开启，并修改滚动页面次数，修改后立即生效
-6. 如果未开启自动滚动页面功能，用户需要手动滚动页面以便加载更多内容后再进行其他操作
-7. 支持作品文件打包下载；该功能默认开启，多个文件的作品将会以压缩包格式下载
+2. 提取账号发布、收藏、点赞、专辑作品链接时，脚本可以自动滚动页面直至加载全部作品
+3. 提取推荐作品链接、搜索作品、用户链接时，脚本可以自动滚动指定次数加载更多内容，默认滚动次数：50 次
+4. 自动滚动页面功能默认关闭；用户可以自由开启，并修改滚动页面次数，修改后立即生效
+5. 如果未开启自动滚动页面功能，用户需要手动滚动页面以便加载更多内容后再进行其他操作
+6. 支持作品文件打包下载；该功能默认开启，多个文件的作品将会以压缩包格式下载
+7. 向服务器推送下载任务时，文件格式、名称规则等设置以服务器配置文件中的设置为准
+8. 使用全局代理工具可能会导致脚本下载文件失败，如有异常，请尝试关闭代理工具，必要时向作者反馈
+9. XHS-Downloader 用户脚本仅实现可见即可得的数据采集功能，无任何收费功能和破解功能
 
 项目开源地址：https://github.com/JoeanAmier/XHS-Downloader
 `
@@ -242,7 +245,11 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
             images.forEach((item) => {
                 let match = item.urlDefault.match(regex);
                 if (match && match[1]) {
-                    urls.push(`https://ci.xiaohongshu.com/${match[1]}?imageView2/format/png`);
+                    urls.push(
+                        `https://ci.xiaohongshu.com/${match[1]}?imageView2/format/${GM_getValue(
+                            "imageDownloadFormat",
+                            "JPEG"
+                        ).toLowerCase()}`);
                 }
             })
             return urls
@@ -413,9 +420,9 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         const downloadPromises = items.map(async (item) => {
             let fileName;
             if (item.index) {
-                fileName = `${name}_${item.index}.png`; // 根据索引生成文件名
+                fileName = `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`; // 根据索引生成文件名
             } else {
-                fileName = `${name}.png`;
+                fileName = `${name}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`;
             }
             const result = await downloadFile(item.url, fileName, false); // 调用单个文件下载方法
             if (result) {
@@ -476,11 +483,14 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         if (!config.packageDownloadFiles && items.length > 1) {
             let result = [];
             for (let item of items) {
-                result.push(await downloadFile(item.url, `${name}_${item.index}.png`));
+                result.push(
+                    await downloadFile(item.url, `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "JPEG")
+                        .toLowerCase()}`));
             }
             success = result.every(item => item === true);
         } else if (items.length === 1) {
-            success = await downloadFile(items[0].url, `${name}.png`);
+            success = await downloadFile(
+                items[0].url, `${name}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`);
         } else {
             success = await downloadFiles(items, name,);
         }
@@ -1171,8 +1181,8 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         // const imageDownloadFormat = createSelectItem({
         //                                                  label: '图片下载格式',
         //                                                  description: '选择图片格式',
-        //                                                  options: ["AUTO", "PNG", "JPG",],
-        //                                                  value: GM_getValue("imageDownloadFormat", "JPG"),
+        //                                                  options: ["AUTO", "PNG", "WEBP", "JPEG", "HEIC"],
+        //                                                  value: GM_getValue("imageDownloadFormat", "JPEG"),
         //                                              });
         //
         // const nameFormat = createTextInput({

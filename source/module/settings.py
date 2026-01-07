@@ -21,7 +21,7 @@ class Settings:
         "chunk": 1024 * 1024 * 2,  # 下载块大小(字节)
         "max_retry": 5,  # 最大重试次数
         "record_data": False,  # 是否记录作品数据
-        "image_format": "PNG",  # 图文作品格式
+        "image_format": "JPEG",  # 图文作品格式
         "image_download": True,  # 是否下载图文
         "video_download": True,  # 是否下载视频
         "live_download": False,  # 是否下载动图

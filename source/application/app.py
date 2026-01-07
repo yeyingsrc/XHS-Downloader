@@ -126,7 +126,7 @@ class XHS:
         chunk=1024 * 1024,
         max_retry=5,
         record_data=False,
-        image_format="PNG",
+        image_format="JPEG",
         image_download=True,
         video_download=True,
         live_download=False,
