@@ -2,13 +2,14 @@
 // @name           XHS-Downloader
 // @namespace      xhs_downloader
 // @homepage       https://github.com/JoeanAmier/XHS-Downloader
-// @version        2.2.5
+// @version        2.2.6
 // @tag            小红书
 // @tag            RedNote
 // @description    提取小红书作品/用户链接，下载小红书无水印图文/视频作品文件
 // @description:en Extract RedNote works/user links, Download watermark-free images/videos files
 // @author         JoeanAmier
 // @match          http*://www.xiaohongshu.com/explore*
+// @match          http*://www.xiaohongshu.com/discovery/item/*
 // @match          http*://www.xiaohongshu.com/user/profile/*
 // @match          http*://www.xiaohongshu.com/search_result*
 // @match          http*://www.xiaohongshu.com/board/*
@@ -222,17 +223,13 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
     }
 
     const generateVideoUrl = note => {
-        // try {
-        //     return [`https://sns-video-bd.xhscdn.com/${note.video.consumer.originVideoKey}`];
-        // } catch (error) {
-        //     console.error("Error generating video URL:", error);
-        //     return [];
-        // }
         try {
+            const key = note.video?.consumer?.originVideoKey;
+            if (key) return [`https://sns-video-bd.xhscdn.com/${key}`];
             const video = note.video.media.stream.h265;
             return [video[video.length - 1].masterUrl];
         } catch (error) {
-            console.error("Error extract video URL:", error);
+            console.error("Error deal video URL:", error);
             return [];
         }
     };
@@ -243,7 +240,8 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         let urls = [];
         try {
             images.forEach((item) => {
-                let match = item.urlDefault.match(regex);
+                const url = item.urlDefault || item.url;
+                let match = url.match(regex);
                 if (match && match[1]) {
                     urls.push(
                         `https://ci.xiaohongshu.com/${match[1]}?imageView2/format/${GM_getValue(
@@ -268,9 +266,10 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
                 return []
             }
             for (const [index, item] of imageList.entries()) {
-                if (item.urlDefault) {
+                const url = item.urlDefault || item.url;
+                if (url) {
                     items.push({
-                                   webp: item.urlDefault, index: index + 1, url: urls[index],
+                                   webp: url, index: index + 1, url: urls[index],
                                })
                 } else {
                     console.error("提取图片预览链接失败", item)
@@ -339,20 +338,23 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
     };
 
     const extractNoteInfo = () => {
+        const data = unsafeWindow.__INITIAL_STATE__?.noteData?.data?.noteData;
+        if (data) return data;
         const regex = /\/explore\/([^?]+)/;
         const match = currentUrl.match(regex);
         if (match) {
-            return unsafeWindow.__INITIAL_STATE__.note.noteDetailMap[match[1]]
+            return unsafeWindow.__INITIAL_STATE__.note.noteDetailMap[match[1]].note;
         } else {
             console.error("从链接提取作品 ID 失败", currentUrl,);
         }
     };
 
     const extractDownloadLinks = async (server = false) => {
-        if (currentUrl.includes("https://www.xiaohongshu.com/explore/")) {
+        if (currentUrl.includes("https://www.xiaohongshu.com/explore/") || currentUrl.includes(
+            "https://www.xiaohongshu.com/discovery/item/")) {
             let note = extractNoteInfo();
-            if (note.note) {
-                await exploreDeal(note.note, server,);
+            if (note) {
+                await exploreDeal(note, server,);
             } else {
                 abnormal("读取作品数据发生异常！");
             }
@@ -2039,7 +2041,8 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
                                action: () => extractAllLinksEvent(-1),
                                description: '提取当前页面的作品链接至剪贴板'
                            },);
-        } else if (currentUrl.includes("https://www.xiaohongshu.com/explore/")) {
+        } else if (currentUrl.includes("https://www.xiaohongshu.com/explore/") || currentUrl.includes(
+            "https://www.xiaohongshu.com/discovery/item/")) {
             menuItems.push({
                                text: '下载作品文件',
                                icon: ' 📦 ',
