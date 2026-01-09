@@ -230,7 +230,9 @@ class XHS:
                     container["作品类型"],
                     container["时间戳"],
                 )
-                if result:
+                if not result:
+                    count.skip += 1
+                elif all(result):
                     count.success += 1
                     await self.__add_record(
                         i,
