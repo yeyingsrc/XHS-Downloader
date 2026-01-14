@@ -23,6 +23,7 @@ dependencies = [
     "textual>=6.8.0",
     "uvicorn>=0.38.0",
     "websockets>=15.0.1",
+    "xhshow>=0.1.7",
 ]
 
 [project.urls]

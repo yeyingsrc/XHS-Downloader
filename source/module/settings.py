@@ -15,6 +15,8 @@ class Settings:
         "folder_name": "Download",  # 下载文件夹名称
         "name_format": "发布时间 作者昵称 作品标题",  # 文件命名格式
         "user_agent": USERAGENT,  # 请求头
+        # "a_user_agent": USERAGENT,  # 请求头
+        # "b_user_agent": USERAGENT,  # 请求头
         "cookie": "",  # Cookie
         "proxy": None,  # 代理设置
         "timeout": 10,  # 超时时间(秒)
