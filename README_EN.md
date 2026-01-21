@@ -88,7 +88,7 @@
 <p><strong>Method 2:</strong> Download and extract the files (do not run the program), then copy all files and directly overwrite the old version.</p>
 <h2>⌨️ Run from Source Code</h2>
 <ol>
-<li>Install <a href="https://www.python.org/">Python</a> interpreter version <code>3.12</code></li>
+<li>Install <a href="https://www.python.org/">Python</a> interpreter version <code>≥3.12</code></li>
 <li>Download the latest source code or the source code released in <a href="https://github.com/JoeanAmier/XHS-Downloader/releases/latest">Releases</a> to your local machine</li>
 <ol><b>Install project dependencies using pip</b>
 <li>Run the command <code>python -m venv venv</code> to create a virtual environment (optional)</li>
@@ -130,9 +130,10 @@
 <p><strong>Note:</strong> When the <code>--index</code> parameter is not set, multiple works links can be passed in. All links must be enclosed in quotation marks and separated by spaces. When the <code>--index</code> parameter is set, multiple works links are not supported. Even if multiple links are passed in, the program will only process the first link!</p>
 <p>The <code>bool</code> type parameters support setting with <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>, <code>yes</code>, <code>no</code>, <code>on</code> or <code>off</code> (case insensitive).</p>
 <h2>Read Browser Cookies</h2>
-<p>You can use the command line to <b>read cookies from browser and write them to the configuration file!</b></p>
-<p>Command example: <code>python .\main.py --browser_cookie Chrome --update_settings</code></p>
-<p>Compatibility note: The third-party module this feature depends on has not been updated for a long time and may not properly support the latest browser versions. If the feature is not working properly, please try obtaining cookies manually!</p>
+<p>This feature is no longer available. Please refer to the <a href="#cookie">Obtain Cookie</a> tutorial!</p>
+<p><del>You can use the command line to <b>read cookies from browser and write them to the configuration file!</b></del></p>
+<p><del>Command example: <code>python .\main.py --browser_cookie Chrome --update_settings</code></del></p>
+<p><del>Compatibility note: The third-party module this feature depends on has not been updated for a long time and may not properly support the latest browser versions. If the feature is not working properly, please try obtaining cookies manually!</del></p>
 <hr>
 <img src="static/screenshot/命令行模式截图EN1.png" alt="">
 <hr>
@@ -523,7 +524,7 @@ async def example():
 <hr>
 <p><b>Additional Notes: The parameters <code>user_agent</code> examples are provided for reference; Strongly recommend setting according to actual browser information!</b></p>
 <img src="static/screenshot/请求头示例图.png" alt="">
-<h1>🌐 Cookie</h1>
+<h1 id="cookie">🌐 Cookie</h1>
 <p>Starting from version <code>2.2</code>, if there are no abnormalities in project functionality, there is no need to handle cookies separately!</p>
 <ol>
 <li>Open the browser (optional: start in incognito mode) and visit <code>https://www.xiaohongshu.com/explore</code></li>

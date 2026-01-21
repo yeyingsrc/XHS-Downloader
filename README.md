@@ -87,7 +87,7 @@
 <p><strong>方案二：</strong>下载并解压文件（不要运行程序），复制全部文件，直接覆盖旧版本文件。</p>
 <h2>⌨️ 源码运行</h2>
 <ol>
-<li>安装 <code>3.12</code> 版本的 <a href="https://www.python.org/">Python</a> 解释器</li>
+<li>安装 <code>≥3.12</code> 版本的 <a href="https://www.python.org/">Python</a> 解释器</li>
 <li>下载最新的源码或 <a href="https://github.com/JoeanAmier/XHS-Downloader/releases/latest">Releases</a> 发布的源码至本地</li>
 <ol><b>使用 pip 安装项目依赖</b>
 <li>运行 <code>python -m venv venv</code> 命令创建虚拟环境（可选）</li>
@@ -129,9 +129,10 @@
 <p><strong>注意：</strong>未设置 <code>--index</code> 参数时，支持传入多个作品链接，全部链接需要使用引号包围，链接之间使用空格分隔；已设置 <code>--index</code> 参数时，不支持传入多个作品链接，即使传入多个作品链接，程序仅处理首个作品链接！</p>
 <p><code>bool</code> 类型参数支持使用 <code>true</code>、<code>false</code>、<code>1</code>、<code>0</code>、<code>yes</code>、<code>no</code>、<code>on</code> 或 <code>off</code>（不区分大小写）来设置。</p>
 <h2>从浏览器读取 Cookie</h2>
-<p>可以使用命令行实现 <b>从浏览器读取 Cookie 并写入配置文件！</b></p>
-<p>命令示例：<code>python .\main.py --browser_cookie Chrome --update_settings</code></p>
-<p>兼容性提醒：此功能依赖的第三方模块已长期未更新，可能无法正常支持最新浏览器版本。若功能出现异常，请尝试手动获取 Cookie！</p>
+<p>该功能已失效，请参考 <a href="#cookie">获取 Cookie</a> 教程！</p>
+<p><del>可以使用命令行实现 <b>从浏览器读取 Cookie 并写入配置文件！</b></del></p>
+<p><del>命令示例：<code>python .\main.py --browser_cookie Chrome --update_settings</code></del></p>
+<p><del>兼容性提醒：此功能依赖的第三方模块已长期未更新，可能无法正常支持最新浏览器版本。若功能出现异常，请尝试手动获取 Cookie！</del></p>
 <hr>
 <img src="static/screenshot/命令行模式截图CN1.png" alt="">
 <hr>
@@ -500,7 +501,7 @@ async def example():
 <hr>
 <p><b>其他说明：<code>user_agent</code>参数获取示例；强烈建议根据实际浏览器信息进行设置！</b></p>
 <img src="static/screenshot/请求头示例图.png" alt="">
-<h1>🌐 Cookie</h1>
+<h1 id="cookie">🌐 Cookie</h1>
 <p><code>2.2</code> 版本开始，项目功能无异常的情况下，无需额外处理 Cookie！</p>
 <ol>
 <li>打开浏览器（可选无痕模式启动），访问 <code>https://www.xiaohongshu.com/explore</code></li>

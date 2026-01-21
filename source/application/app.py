@@ -24,7 +24,7 @@ from uvicorn import Config, Server
 from typing import Callable
 
 from ..expansion import (
-    BrowserCookie,
+    # BrowserCookie,
     Cleaner,
     Converter,
     Namespace,
@@ -135,7 +135,7 @@ class XHS:
         author_archive=False,
         write_mtime=False,
         language="zh_CN",
-        read_cookie: int | str = None,
+        # read_cookie: int | str = None,
         script_server: bool = False,
         script_host="0.0.0.0",
         script_port=5558,
@@ -150,7 +150,8 @@ class XHS:
             name_format,
             chunk,
             user_agent,
-            self.read_browser_cookie(read_cookie) or cookie,
+            cookie,
+            # self.read_browser_cookie(read_cookie) or cookie,
             proxy,
             timeout,
             max_retry,
@@ -662,18 +663,18 @@ class XHS:
         await self.stop_script_server()
         await self.manager.close()
 
-    @staticmethod
-    def read_browser_cookie(value: str | int) -> str:
-        return (
-            BrowserCookie.get(
-                value,
-                domains=[
-                    "xiaohongshu.com",
-                ],
-            )
-            if value
-            else ""
-        )
+    # @staticmethod
+    # def read_browser_cookie(value: str | int) -> str:
+    #     return (
+    #         BrowserCookie.get(
+    #             value,
+    #             domains=[
+    #                 "xiaohongshu.com",
+    #             ],
+    #         )
+    #         if value
+    #         else ""
+    #     )
 
     async def run_api_server(
         self,

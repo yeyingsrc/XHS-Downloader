@@ -17,7 +17,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from source.application import XHS
-from source.expansion import BrowserCookie
+
+# from source.expansion import BrowserCookie
 from source.module import (
     ROOT,
     PROJECT,
@@ -100,15 +101,15 @@ class CLI:
         echo(PROJECT)
         ctx.exit()
 
-    @staticmethod
-    @check_value
-    def read_cookie(ctx: Context, param, value) -> str:
-        return BrowserCookie.get(
-            value,
-            domains=[
-                "xiaohongshu.com",
-            ],
-        )
+    # @staticmethod
+    # @check_value
+    # def read_cookie(ctx: Context, param, value) -> str:
+    #     return BrowserCookie.get(
+    #         value,
+    #         domains=[
+    #             "xiaohongshu.com",
+    #         ],
+    #     )
 
     @staticmethod
     @check_value
@@ -185,25 +186,25 @@ class CLI:
             ),
             ("--language", "-l", "choice", _("设置程序语言，目前支持：zh_CN、en_US")),
             ("--settings", "-s", "str", _("读取指定配置文件")),
-            (
-                "--browser_cookie",
-                "-bc",
-                "choice",
-                fill(
-                    _(
-                        "从指定的浏览器读取小红书网页版 Cookie，支持：{0}; 输入浏览器名称或序号"
-                    ).format(
-                        ", ".join(
-                            f"{i}: {j}"
-                            for i, j in enumerate(
-                                BrowserCookie.SUPPORT_BROWSER.keys(),
-                                start=1,
-                            )
-                        )
-                    ),
-                    width=55,
-                ),
-            ),
+            # (
+            #     "--browser_cookie",
+            #     "-bc",
+            #     "choice",
+            #     fill(
+            #         _(
+            #             "从指定的浏览器读取小红书网页版 Cookie，支持：{0}; 输入浏览器名称或序号"
+            #         ).format(
+            #             ", ".join(
+            #                 f"{i}: {j}"
+            #                 for i, j in enumerate(
+            #                     BrowserCookie.SUPPORT_BROWSER.keys(),
+            #                     start=1,
+            #                 )
+            #             )
+            #         ),
+            #         width=55,
+            #     ),
+            # ),
             ("--update_settings", "-us", "flag", _("是否更新配置文件")),
             ("--help", "-h", "flag", _("查看详细参数说明")),
             ("--version", "-v", "flag", _("查看 XHS-Downloader 版本")),
@@ -318,15 +319,15 @@ class CLI:
     "-s",
     type=Path(dir_okay=False),
 )
-@option(
-    "--browser_cookie",
-    "-bc",
-    type=Choice(
-        list(BrowserCookie.SUPPORT_BROWSER.keys())
-        + [str(i) for i in range(1, len(BrowserCookie.SUPPORT_BROWSER) + 1)]
-    ),
-    callback=CLI.read_cookie,
-)
+# @option(
+#     "--browser_cookie",
+#     "-bc",
+#     type=Choice(
+#         list(BrowserCookie.SUPPORT_BROWSER.keys())
+#         + [str(i) for i in range(1, len(BrowserCookie.SUPPORT_BROWSER) + 1)]
+#     ),
+#     callback=CLI.read_cookie,
+# )
 @option(
     "--update_settings",
     "-us",
