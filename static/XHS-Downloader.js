@@ -2,7 +2,7 @@
 // @name           XHS-Downloader
 // @namespace      xhs_downloader
 // @homepage       https://github.com/JoeanAmier/XHS-Downloader
-// @version        2.2.6
+// @version        2.2.7
 // @tag            小红书
 // @tag            RedNote
 // @description    提取小红书作品/用户链接，下载小红书无水印图文/视频作品文件
@@ -43,7 +43,7 @@
         keepMenuVisible: GM_getValue("keepMenuVisible", false),
         linkCheckboxSwitch: GM_getValue("linkCheckboxSwitch", true),
         imageCheckboxSwitch: GM_getValue("imageCheckboxSwitch", true),
-        imageDownloadFormat: GM_getValue("imageDownloadFormat", "JPEG"),
+        imageDownloadFormat: GM_getValue("imageDownloadFormat", "jpeg"),
         scriptServerURL: GM_getValue("scriptServerURL", defaultsWebSocketURL),
         scriptServerSwitch: GM_getValue("scriptServerSwitch", false),
         fileNameFormat: undefined,
@@ -182,6 +182,11 @@
         GM_setValue("scriptServerSwitch", config.scriptServerSwitch);
     }
 
+    const updateImageDownloadFormat = (value) => {
+        config.imageDownloadFormat = value.toLowerCase();
+        GM_setValue("imageDownloadFormat", config.imageDownloadFormat);
+    }
+
     const updateFileNameFormat = (value) => {
         config.fileNameFormat = value;
         GM_setValue("fileNameFormat", config.fileNameFormat);
@@ -246,8 +251,8 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
                     urls.push(
                         `https://ci.xiaohongshu.com/${match[1]}?imageView2/format/${GM_getValue(
                             "imageDownloadFormat",
-                            "JPEG"
-                        ).toLowerCase()}`);
+                            "jpeg"
+                        )}`);
                 }
             })
             return urls
@@ -422,9 +427,9 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         const downloadPromises = items.map(async (item) => {
             let fileName;
             if (item.index) {
-                fileName = `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`; // 根据索引生成文件名
+                fileName = `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "jpeg")}`; // 根据索引生成文件名
             } else {
-                fileName = `${name}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`;
+                fileName = `${name}.${GM_getValue("imageDownloadFormat", "jpeg")}`;
             }
             const result = await downloadFile(item.url, fileName, false); // 调用单个文件下载方法
             if (result) {
@@ -486,13 +491,13 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
             let result = [];
             for (let item of items) {
                 result.push(
-                    await downloadFile(item.url, `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "JPEG")
-                        .toLowerCase()}`));
+                    await downloadFile(item.url, `${name}_${item.index}.${GM_getValue("imageDownloadFormat", "jpeg")
+                    }`));
             }
             success = result.every(item => item === true);
         } else if (items.length === 1) {
             success = await downloadFile(
-                items[0].url, `${name}.${GM_getValue("imageDownloadFormat", "JPEG").toLowerCase()}`);
+                items[0].url, `${name}.${GM_getValue("imageDownloadFormat", "jpeg")}`);
         } else {
             success = await downloadFiles(items, name,);
         }
@@ -1180,13 +1185,14 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
                                                         checked: GM_getValue("scriptServerSwitch", false),
                                                     });
 
-        // const imageDownloadFormat = createSelectItem({
-        //                                                  label: '图片下载格式',
-        //                                                  description: '选择图片格式',
-        //                                                  options: ["AUTO", "PNG", "WEBP", "JPEG", "HEIC"],
-        //                                                  value: GM_getValue("imageDownloadFormat", "JPEG"),
-        //                                              });
-        //
+        const imageDownloadFormat = createSelectItem({
+                                                         label: '图片下载格式',
+                                                         description: '图文作品文件下载格式',
+                                                         options: ["PNG", "WEBP", "JPEG", "HEIC"],
+                                                         value: GM_getValue("imageDownloadFormat", "jpeg")
+                                                             .toUpperCase(),
+                                                     });
+
         // const nameFormat = createTextInput({
         //                                        label: '文件名称格式',
         //                                        description: '设置文件的名称格式（例如：{date}-{title}）。',
@@ -1210,7 +1216,7 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
         body.appendChild(scrollCount);
         body.appendChild(linkCheckboxSwitch);
         body.appendChild(imageCheckboxSwitch);
-        // body.appendChild(imageDownloadFormat);
+        body.appendChild(imageDownloadFormat);
         body.appendChild(keepMenuVisible);
         body.appendChild(scriptServerURL);
         body.appendChild(scriptServerSwitch);
@@ -1244,6 +1250,7 @@ KS-Downloader（快手、KuaiShou）：https://github.com/JoeanAmier/KS-Download
             updateMaxScrollCount(parseInt(scrollCount.querySelector('input').value) || 50)
             updateScriptServerURL(scriptServerURL.querySelector('.text-input').value.trim() || defaultsWebSocketURL);
             updateScriptServerSwitch(scriptServerSwitch.querySelector('input').checked);
+            updateImageDownloadFormat(imageDownloadFormat.querySelector('select').value.trim() || "jpeg");
             // updateFileNameFormat(nameFormat.querySelector('.text-input').value.trim() || null);
             closeSettingsModal();
         });
