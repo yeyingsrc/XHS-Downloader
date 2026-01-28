@@ -262,6 +262,8 @@ async def example_api():
 <img src="static/screenshot/用户脚本截图4.png" alt="">
 </details>
 <p>Note: Using the XHS-Downloader user script to batch extract works links, in combination with the XHS-Downloader program, can achieve batch downloading of watermark-free works files!</p>
+<p><b>Modify user script language</b></p>
+<img src="static/screenshot/脚本切换语言.png" alt="切换语言">
 <h2>🌐 Connect to Server</h2>
 <p>⭐ This project supports interaction with the main program through a browser userscript, enabling one-click push of download tasks.</p>
 <ul><b>Function Description:</b>

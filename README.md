@@ -258,6 +258,8 @@ async def example_api():
 <img src="static/screenshot/用户脚本截图4.png" alt="">
 </details>
 <p>提示：使用 XHS-Downloader 用户脚本批量提取作品链接，搭配 XHS-Downloader 程序可以实现批量下载无水印作品文件！</p>
+<p><b>修改用户脚本语言</b></p>
+<img src="static/screenshot/脚本切换语言.png" alt="切换语言">
 <h2>🌏 连接服务器</h2>
 <p>⭐ 本项目支持通过浏览器用户脚本与主程序联动，实现一键推送下载任务。</p>
 <ul><b>功能说明：</b>
