@@ -661,6 +661,27 @@ repository to execute the build process
 </tbody>
 </table>
 <p>If you are willing, you may consider making a donation to provide additional support for <b>XHS-Downloader</b>!</p>
+
+# 💰 Project Sponsorship
+
+## DartNode
+
+[![Powered by DartNode](static/other/DartNode_AD.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
+
+***
+
+## ZMTO
+
+<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
+<p><a href="https://www.zmto.com/">ZMTO</a>: A professional cloud infrastructure provider offering sophisticated solutions with reliable technology and expert support. We also empower qualified open source initiatives with enterprise-grade VPS infrastructure, driving sustainable development and innovation in the open source ecosystem. </p>
+
+***
+
+## IPWO
+
+<p><a href="https://www.ipwo.net/?ref=githubJoeanAmier"><img src="static/other/IPWO_AD_LOGO.jpg" alt="IPWO"></a></p>
+<p><a href="https://www.ipwo.net/?ref=githubJoeanAmier">IPWO</a> is a world-leading residential proxy network for web scraping.
+It specializes in providing proxy services covering more than 195 countries worldwide, with a massive IP pool of over 100 million addresses to ensure fast and stable network connections. Featuring high availability and high concurrency, it easily handles large-scale crawling tasks, allowing even beginners to collect data efficiently.</p>
 <h1>🌟 Contribution Guidelines</h1>
 <p><strong>Welcome to contributing to this project! To keep the codebase clean, efficient, and easy to maintain, please read the following guidelines carefully to ensure that your contributions can be accepted and integrated smoothly.</strong></p>
 <ul>
@@ -689,19 +710,6 @@ repository to execute the build process
 <li><b>DouK-Downloader（抖音、TikTok）</b>：<a href="https://github.com/JoeanAmier/TikTokDownloader">https://github.com/JoeanAmier/TikTokDownloader</a></li>
 <li><b>KS-Downloader（快手、KuaiShou）</b>：<a href="https://github.com/JoeanAmier/KS-Downloader">https://github.com/JoeanAmier/KS-Downloader</a></li>
 </ul>
-
-# 💰 Project Sponsorship
-
-## DartNode
-
-[![Powered by DartNode](static/DartNode_AD.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
-
-***
-
-## ZMTO
-
-<a href="https://www.zmto.com/"><img src="https://console.zmto.com/templates/2019/dist/images/logo_dark.svg" alt="ZMTO"></a>
-<p><a href="https://www.zmto.com/">ZMTO</a>: A professional cloud infrastructure provider offering sophisticated solutions with reliable technology and expert support. We also empower qualified open source initiatives with enterprise-grade VPS infrastructure, driving sustainable development and innovation in the open source ecosystem. </p>
 <h1>⚠️ Disclaimer</h1>
 <ol>
 <li>The user's use of this project is entirely at their own discretion and responsibility. The author assumes no liability for any losses, claims, or risks arising from the user's use of this project.</li>
